@@ -42,6 +42,19 @@ export function render(elem, parent) {
   parent.insertAdjacentElement("afterbegin", elem);
 }
 
+export function renderBeforeEnd(elem, parent) {
+  parent.insertAdjacentElement("beforeend", elem);
+}
+
+export function renderAfterEnd(elem, parent) {
+  parent.insertAdjacentElement("afterend", elem);
+}
+
+export function renderAndReplace(elem, parent) {
+  parent.innerHTML = "";
+  parent.insertAdjacentElement("afterbegin", elem);
+}
+
 function addAttributes(elem, attrs) {
   if (attrs === null || attrs === undefined) attrs = {};
   for (let [attr, value] of Object.entries(attrs)) {
@@ -78,7 +91,7 @@ const createAndAppendSVG = (tag, attrs, ...children) => {
     const childElement = document.createElementNS('http://www.w3.org/2000/svg', child.nodeName.toLowerCase())
 
     for (const attribute of child.attributes) {
-      childElement.setAttributeNS(null,attribute.nodeName, attribute.nodeValue);
+      childElement.setAttributeNS(null, attribute.nodeName, attribute.nodeValue);
     }
 
     appendChild(element, childElement);
@@ -88,17 +101,17 @@ const createAndAppendSVG = (tag, attrs, ...children) => {
 }
 
 
-function converter(tag, attrs, ...children) { 
+function converter(tag, attrs, ...children) {
   if (tag === "svg") {
     return createAndAppendSVG(tag, attrs, ...children);
   }
 
   const elem = createElement(tag, attrs);
-  
+
   for (const child of children) {
     appendChild(elem, child);
   }
-  
+
   return elem;
 }
 

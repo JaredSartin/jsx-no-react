@@ -1,4 +1,4 @@
-import jsxElem, { render } from "./module";
+import jsxElem, { render, renderBeforeEnd, renderAfterEnd, renderAndReplace } from "./module";
 import expectExport from "expect";
 
 describe("jsxElement usage", () => {
@@ -100,7 +100,7 @@ describe("jsxElement usage", () => {
       <i>{[...Array(props.dots)].map(idx => ".")}</i>
     );
 
-    const element =  <div>
+    const element = <div>
       <Hello name="foo" />
       <CustomSeparator dots={50} />
       <Hello name="bar" />
@@ -118,7 +118,7 @@ describe("jsxElement usage", () => {
     }
 
     const element = <div><Hello /></div>;
-    
+
     expect(element.innerHTML).toEqual("<h1>Hello</h1><h1>world</h1>");
   });
 });
@@ -134,6 +134,53 @@ describe("render", () => {
     expect(mockElement.mock.calls.length).toBe(1);
     expect(mockElement.mock.calls[0][0]).toBe("afterbegin");
     expect(mockElement.mock.calls[0][1].outerHTML).toEqual(
+      "<h1>Hello world</h1>"
+    );
+  });
+});
+
+describe("renderBeforeEnd", () => {
+  it("adds the output before the end of the element", () => {
+    function Hello(props) {
+      return <h1>Hello {props.name}</h1>;
+    }
+
+    const mockElement = jest.fn();
+    renderBeforeEnd(<Hello name="world" />, { insertAdjacentElement: mockElement });
+    expect(mockElement.mock.calls.length).toBe(1);
+    expect(mockElement.mock.calls[0][0]).toBe("beforeend");
+    expect(mockElement.mock.calls[0][1].outerHTML).toEqual(
+      "<h1>Hello world</h1>"
+    );
+  });
+});
+
+describe("renderAfterEnd", () => {
+  it("adds the output after the end of the element", () => {
+    function Hello(props) {
+      return <h1>Hello {props.name}</h1>;
+    }
+
+    const mockElement = jest.fn();
+    renderAfterEnd(<Hello name="world" />, { insertAdjacentElement: mockElement });
+    expect(mockElement.mock.calls.length).toBe(1);
+    expect(mockElement.mock.calls[0][0]).toBe("afterend");
+    expect(mockElement.mock.calls[0][1].outerHTML).toEqual(
+      "<h1>Hello world</h1>"
+    );
+  });
+});
+
+describe("renderAndReplace", () => {
+  it("replace content and adds the output", () => {
+    function Hello(props) {
+      return <h1>Hello {props.name}</h1>;
+    }
+
+    const mockElement = document.createElement("div");
+    document.body.appendChild(mockElement);
+    renderAndReplace(<Hello name="world" />, document.body);
+    expect(document.body.innerHTML).toEqual(
       "<h1>Hello world</h1>"
     );
   });

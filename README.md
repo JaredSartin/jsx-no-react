@@ -113,6 +113,25 @@ function Hello(props) {
 render(<Hello name="world" />, document.body);
 ```
 
+There are several ways to render an element:
+- `render`: which renders an element just after the beginning of the parent element
+- `renderBeforeEnd`: this function renders the JSX element before the end of the parent element.
+- `renderAfterEnd`: this function renders the JSX element after the end of the parent element.
+- `renderAndReplace`: this function renders the JSX element on parent element by replacing the content.
+
+```javascript
+import jsxElem, { render, renderAfterEnd, renderBeforeEnd, renderAndReplace } from "jsx-no-react";
+
+function Hello(props) {
+  return <h1>Hello {props.name}</h1>;
+}
+
+render(<Hello name="world" />, document.body);
+renderAfterEnd(<Hello name="world" />, document.body);
+renderBeforeEnd(<Hello name="world" />, document.body);
+renderAndReplace(<Hello name="world" />, document.body);
+```
+
 #### Composing Components
 
 Components can be reused and combined together.
