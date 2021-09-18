@@ -1,3 +1,7 @@
+# 1.1.0
+
+*  Add beforeEnd and afterEnd render options thanks to [theodugautier](https://github.com/theodugautier)
+
 # 1.0.0
 
 * Added Fragment support thanks to [f107](https://github.com/f107)
