@@ -1,3 +1,7 @@
+# 1.1.1
+
+Sadly the previous release had old code in it, this release fixes it.
+
 # 1.1.0
 
 *  Add beforeEnd and afterEnd render options thanks to [theodugautier](https://github.com/theodugautier)
