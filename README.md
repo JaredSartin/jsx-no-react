@@ -2,7 +2,7 @@
 
 [![Build Status](https://github.com/bitboxer/jsx-no-react/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/bitboxer/jsx-no-react/actions/workflows/node.js.yml)
 
-`jsx-no-react` makes it possible to use React's JSX syntax outside of React projects. Support for `renderBefore` and `renderAfter` functionality requires support for `Element.insertAdjacentElement()` which is supported in most modern browsers, all other render modes support legacy browsers.
+`jsx-no-react` makes it possible to use React's JSX syntax outside of React projects. Using `renderBefore` and `renderAfter` requires a modern browser supporting `Element.insertAdjacentElement()` - all other render modes function in legacy browsers.
 
 ## Installation
 
