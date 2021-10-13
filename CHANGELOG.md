@@ -1,3 +1,16 @@
+# 1.2.0
+
+1.2.0 introduces breaking changes with rendering modes - `renderAndReplace` is now called `render` to follow common practice with SPA frameworks rendering mechanisms. Additionally, the render locations below are more explicit on where they will place the JSX output. Finally, prepend and append now support top-level JSX fragments (before and after render locations require a top-level container element still).
+
+New methods:
+```js
+renderBefore(<Hello name="world" />, targetElement);
+renderPrepend(<Hello name="world" />, targetElement);
+render(<Hello name="world" />, targetElement);
+renderAppend(<Hello name="world" />, targetElement);
+renderAfter(<Hello name="world" />, targetElement);
+```
+
 # 1.1.1
 
 Sadly the previous release had old code in it, this release fixes it.

@@ -189,18 +189,22 @@ var JSXNoReact = (function (exports) {
     return element;
   }
 
+  function renderBefore(elem, parent) {
+    parent.insertAdjacentElement("beforebegin", elem);
+  }
+  function renderPrepend(elem, parent) {
+    var parentFirstChild = parent.children ? parent.children[0] : null;
+    parent.insertBefore(elem, parentFirstChild);
+  }
   function render(elem, parent) {
-    parent.insertAdjacentElement("afterbegin", elem);
-  }
-  function renderBeforeEnd(elem, parent) {
-    parent.insertAdjacentElement("beforeend", elem);
-  }
-  function renderAfterEnd(elem, parent) {
-    parent.insertAdjacentElement("afterend", elem);
-  }
-  function renderAndReplace(elem, parent) {
     parent.innerHTML = "";
-    parent.insertAdjacentElement("afterbegin", elem);
+    parent.appendChild(elem);
+  }
+  function renderAppend(elem, parent) {
+    parent.appendChild(elem);
+  }
+  function renderAfter(elem, parent) {
+    parent.insertAdjacentElement("afterend", elem);
   }
 
   function addAttributes(elem, attrs) {
@@ -296,9 +300,10 @@ var JSXNoReact = (function (exports) {
 
   exports["default"] = module;
   exports.render = render;
-  exports.renderAfterEnd = renderAfterEnd;
-  exports.renderAndReplace = renderAndReplace;
-  exports.renderBeforeEnd = renderBeforeEnd;
+  exports.renderAfter = renderAfter;
+  exports.renderAppend = renderAppend;
+  exports.renderBefore = renderBefore;
+  exports.renderPrepend = renderPrepend;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
