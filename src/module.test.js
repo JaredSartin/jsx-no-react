@@ -1,4 +1,4 @@
-import jsxElem, { render, renderBeforeEnd, renderAfterEnd, renderAndReplace } from "./module";
+import jsxElem, { render, renderAppend, renderAfter, renderBefore, renderPrepend } from "./module";
 import expectExport from "expect";
 
 describe("jsxElement usage", () => {
@@ -124,64 +124,125 @@ describe("jsxElement usage", () => {
 });
 
 describe("render", () => {
-  it("adds the output to the element", () => {
+  it("replaces content and adds the output", () => {
     function Hello(props) {
       return <h1>Hello {props.name}</h1>;
     }
 
-    const mockElement = jest.fn();
-    render(<Hello name="world" />, { insertAdjacentElement: mockElement });
-    expect(mockElement.mock.calls.length).toBe(1);
-    expect(mockElement.mock.calls[0][0]).toBe("afterbegin");
-    expect(mockElement.mock.calls[0][1].outerHTML).toEqual(
+    const mockParent = <div><h1>Exist</h1></div>;
+    render(<Hello name="world" />, mockParent);
+    expect(mockParent.innerHTML).toEqual(
       "<h1>Hello world</h1>"
+    );
+  });
+
+  it("replaces contents when top-level JSX element is a fragment", () => {
+    const mockParent = <div><h1>Exist</h1></div>;
+    const fragmentChild = <>
+      <h1>Hello</h1>
+      <h1>World</h1>
+    </>;
+    render(fragmentChild, mockParent);
+    expect(mockParent.innerHTML).toEqual(
+      "<h1>Hello</h1><h1>World</h1>"
     );
   });
 });
 
-describe("renderBeforeEnd", () => {
+describe("renderAppend", () => {
   it("adds the output before the end of the element", () => {
     function Hello(props) {
       return <h1>Hello {props.name}</h1>;
     }
 
-    const mockElement = jest.fn();
-    renderBeforeEnd(<Hello name="world" />, { insertAdjacentElement: mockElement });
-    expect(mockElement.mock.calls.length).toBe(1);
-    expect(mockElement.mock.calls[0][0]).toBe("beforeend");
-    expect(mockElement.mock.calls[0][1].outerHTML).toEqual(
-      "<h1>Hello world</h1>"
+    const mockParent = <div><h1>Exist</h1></div>;
+    renderAppend(<Hello name="world" />, mockParent);
+    expect(mockParent.innerHTML).toEqual(
+      "<h1>Exist</h1><h1>Hello world</h1>"
+    );
+  });
+
+  it("appends contents when top-level JSX element is a fragment", () => {
+    const mockParent = <div><h1>Exist</h1></div>;
+    const fragmentChild = <>
+      <h1>Hello</h1>
+      <h1>World</h1>
+    </>;
+    renderAppend(fragmentChild, mockParent);
+    expect(mockParent.innerHTML).toEqual(
+      "<h1>Exist</h1><h1>Hello</h1><h1>World</h1>"
     );
   });
 });
 
-describe("renderAfterEnd", () => {
+describe("renderPrepend", () => {
+  it("adds the output at the start of the element", () => {
+    function Hello(props) {
+      return <h1>Hello {props.name}</h1>;
+    }
+
+    const mockParent = <div><h1>Exist</h1></div>;
+    renderPrepend(<Hello name="world" />, mockParent);
+    expect(mockParent.innerHTML).toEqual(
+      "<h1>Hello world</h1><h1>Exist</h1>"
+    );
+  });
+
+  it("prepends contents when top-level JSX element is a fragment", () => {
+    const mockParent = <div><h1>Exist</h1></div>;
+    const fragmentChild = <>
+      <h1>Hello</h1>
+      <h1>World</h1>
+    </>;
+    renderPrepend(fragmentChild, mockParent);
+    expect(mockParent.innerHTML).toEqual(
+      "<h1>Hello</h1><h1>World</h1><h1>Exist</h1>"
+    );
+  });
+});
+
+describe("renderAfter", () => {
   it("adds the output after the end of the element", () => {
     function Hello(props) {
       return <h1>Hello {props.name}</h1>;
     }
 
     const mockElement = jest.fn();
-    renderAfterEnd(<Hello name="world" />, { insertAdjacentElement: mockElement });
+    renderAfter(<Hello name="world" />, { insertAdjacentElement: mockElement });
     expect(mockElement.mock.calls.length).toBe(1);
     expect(mockElement.mock.calls[0][0]).toBe("afterend");
     expect(mockElement.mock.calls[0][1].outerHTML).toEqual(
       "<h1>Hello world</h1>"
     );
   });
+
+  it("throws an error when given a fragment", () => {
+    const mockElement = jest.fn();
+    expect(() => {
+      renderAfter(<></>, { insertAdjacentElement: mockElement });
+    }).toThrow("renderAfter does not support top-level fragment rendering");
+  });
 });
 
-describe("renderAndReplace", () => {
-  it("replace content and adds the output", () => {
+describe("renderBefore", () => {
+  it("adds the output before the start of the element", () => {
     function Hello(props) {
       return <h1>Hello {props.name}</h1>;
     }
 
-    const mockElement = document.createElement("div");
-    document.body.appendChild(mockElement);
-    renderAndReplace(<Hello name="world" />, document.body);
-    expect(document.body.innerHTML).toEqual(
+    const mockElement = jest.fn();
+    renderBefore(<Hello name="world" />, { insertAdjacentElement: mockElement });
+    expect(mockElement.mock.calls.length).toBe(1);
+    expect(mockElement.mock.calls[0][0]).toBe("beforebegin");
+    expect(mockElement.mock.calls[0][1].outerHTML).toEqual(
       "<h1>Hello world</h1>"
     );
+  });
+
+  it("throws an error when given a fragment", () => {
+    const mockElement = jest.fn();
+    expect(() => {
+      renderBefore(<></>, { insertAdjacentElement: mockElement });
+    }).toThrow("renderBefore does not support top-level fragment rendering");
   });
 });

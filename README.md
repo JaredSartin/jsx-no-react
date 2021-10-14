@@ -12,7 +12,7 @@ yarn add jsx-no-react
 
 ### Upgrading
 
-1.2.0 introduces breaking changes with rendering modes - `renderAndReplace` is now called `render` to follow common practice with SPA frameworks rendering mechanisms. Additionally, the render locations below are more explicit on where they will place the JSX output. Finally, prepend and append now support top-level JSX fragments (before and after render locations require a top-level container element still).
+2.0.0 introduces breaking changes with rendering modes - `renderAndReplace` is now called `render` to follow common practice with SPA frameworks rendering mechanisms. Additionally, the render locations below are more explicit on where they will place the JSX output. Finally, prepend and append now support top-level JSX fragments (before and after render locations require a top-level container element still).
 
 New methods:
 ```js

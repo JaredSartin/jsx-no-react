@@ -190,6 +190,7 @@ var JSXNoReact = (function (exports) {
   }
 
   function renderBefore(elem, parent) {
+    if (elem.constructor === DocumentFragment) throw new Error("renderBefore does not support top-level fragment rendering");
     parent.insertAdjacentElement("beforebegin", elem);
   }
   function renderPrepend(elem, parent) {
@@ -204,6 +205,7 @@ var JSXNoReact = (function (exports) {
     parent.appendChild(elem);
   }
   function renderAfter(elem, parent) {
+    if (elem.constructor === DocumentFragment) throw new Error("renderAfter does not support top-level fragment rendering");
     parent.insertAdjacentElement("afterend", elem);
   }
 

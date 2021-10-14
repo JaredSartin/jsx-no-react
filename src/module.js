@@ -39,6 +39,8 @@ function createElement(elem, attrs) {
 }
 
 export function renderBefore(elem, parent) {
+  if (elem.constructor === DocumentFragment)
+    throw new Error("renderBefore does not support top-level fragment rendering");
   parent.insertAdjacentElement("beforebegin", elem);
 }
 
@@ -57,6 +59,8 @@ export function renderAppend(elem, parent) {
 }
 
 export function renderAfter(elem, parent) {
+  if (elem.constructor === DocumentFragment)
+    throw new Error("renderAfter does not support top-level fragment rendering");
   parent.insertAdjacentElement("afterend", elem);
 }
 
