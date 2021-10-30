@@ -38,21 +38,30 @@ function createElement(elem, attrs) {
   return element;
 }
 
+export function renderBefore(elem, parent) {
+  if (elem.constructor === DocumentFragment)
+    throw new Error("renderBefore does not support top-level fragment rendering");
+  parent.insertAdjacentElement("beforebegin", elem);
+}
+
+export function renderPrepend(elem, parent) {
+  const parentFirstChild = parent.children ? parent.children[0] : null;
+  parent.insertBefore(elem, parentFirstChild);
+}
+
 export function render(elem, parent) {
-  parent.insertAdjacentElement("afterbegin", elem);
-}
-
-export function renderBeforeEnd(elem, parent) {
-  parent.insertAdjacentElement("beforeend", elem);
-}
-
-export function renderAfterEnd(elem, parent) {
-  parent.insertAdjacentElement("afterend", elem);
-}
-
-export function renderAndReplace(elem, parent) {
   parent.innerHTML = "";
-  parent.insertAdjacentElement("afterbegin", elem);
+  parent.appendChild(elem);
+}
+
+export function renderAppend(elem, parent) {
+  parent.appendChild(elem);
+}
+
+export function renderAfter(elem, parent) {
+  if (elem.constructor === DocumentFragment)
+    throw new Error("renderAfter does not support top-level fragment rendering");
+  parent.insertAdjacentElement("afterend", elem);
 }
 
 function addAttributes(elem, attrs) {

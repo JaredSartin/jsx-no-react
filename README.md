@@ -2,12 +2,25 @@
 
 [![Build Status](https://github.com/bitboxer/jsx-no-react/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/bitboxer/jsx-no-react/actions/workflows/node.js.yml)
 
-`jsx-no-react` makes it possible to use React's JSX syntax outside of React projects.
+`jsx-no-react` makes it possible to use React's JSX syntax outside of React projects. Using `renderBefore` and `renderAfter` requires a modern browser supporting `Element.insertAdjacentElement()` - all other render modes function in legacy browsers.
 
 ## Installation
 
 ```sh
 yarn add jsx-no-react
+```
+
+### Upgrading
+
+2.0.0 introduces breaking changes with rendering modes - `renderAndReplace` is now called `render` to follow common practice with SPA frameworks rendering mechanisms. Additionally, the render locations below are more explicit on where they will place the JSX output. Finally, prepend and append now support top-level JSX fragments (before and after render locations require a top-level container element still).
+
+New methods:
+```js
+renderBefore(<Hello name="world" />, targetElement);
+renderPrepend(<Hello name="world" />, targetElement);
+render(<Hello name="world" />, targetElement);
+renderAppend(<Hello name="world" />, targetElement);
+renderAfter(<Hello name="world" />, targetElement);
 ```
 
 ### Usage in Babel
@@ -114,10 +127,11 @@ render(<Hello name="world" />, document.body);
 ```
 
 There are several ways to render an element:
-- `render`: which renders an element just after the beginning of the parent element
-- `renderBeforeEnd`: this function renders the JSX element before the end of the parent element.
-- `renderAfterEnd`: this function renders the JSX element after the end of the parent element.
-- `renderAndReplace`: this function renders the JSX element on parent element by replacing the content.
+- `renderBefore`: this function renders the JSX element before the target - top level JSX element must not be a fragment.
+- `renderPrepend`: this function renders the JSX element within the target element, prepending existing content in the target element.
+- `render`: replaces the contents of the target element with the JSX element.
+- `renderAppend`: this function renders the JSX element within the target element, appending existing content in the target element.
+- `renderAfter`: this function renders the JSX element after after the target element - top level JSX element must not be a fragment.
 
 ```javascript
 import jsxElem, { render, renderAfterEnd, renderBeforeEnd, renderAndReplace } from "jsx-no-react";
@@ -126,10 +140,11 @@ function Hello(props) {
   return <h1>Hello {props.name}</h1>;
 }
 
+renderBefore(<Hello name="world" />, document.body);
+renderPrepend(<Hello name="world" />, document.body);
 render(<Hello name="world" />, document.body);
-renderAfterEnd(<Hello name="world" />, document.body);
-renderBeforeEnd(<Hello name="world" />, document.body);
-renderAndReplace(<Hello name="world" />, document.body);
+renderAppend(<Hello name="world" />, document.body);
+renderAfter(<Hello name="world" />, document.body);
 ```
 
 #### Composing Components
@@ -159,7 +174,10 @@ function App() {
 
 render(<App />, document.body);
 ```
+
 ##### Fragments
+
+Fragments are supported as child elements everywhere, but are also supported as top-level JSX elements when using `renderPrepend`, `render`, and `renderAppend`.
 
 ```javascript
 function Hello() {
@@ -170,9 +188,7 @@ function Hello() {
 }
 
 function App() {
-  return <div>
-    <Hello />
-  </div>;
+  return <Hello />;
 }
 
 render(<App />, document.body);
