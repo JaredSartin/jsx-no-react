@@ -313,4 +313,4 @@ render(<App />, document.body);
 
 ## Acknowledgement
 
-This package was originally developed by [Terry Kerr](https://github.com/dtkerr).
+This package was originally developed by [Terry Kerr](https://github.com/dtkerr) and extended by [Bodo Tasche](https://github.com/bitboxer).
