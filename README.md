@@ -1,7 +1,3 @@
-# Not longer maintained
-
-Please switch to [render-jsx](https://github.com/loreanvictor/render-jsx), this library is no longer maintained. The main advantage of `render-jsx` is that it's build using typescript.
-
 # jsx-no-react
 
 [![Build Status](https://github.com/bitboxer/jsx-no-react/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/bitboxer/jsx-no-react/actions/workflows/node.js.yml)
