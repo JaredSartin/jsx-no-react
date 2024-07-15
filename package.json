@@ -1,6 +1,6 @@
 {
   "name": "jsx-no-react",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Use JSX without React",
   "repository": "https://github.com/bitboxer/jsx-no-react",
   "author": "Terry Kerr <t@xnr.ca>",
