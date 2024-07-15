@@ -1,3 +1,6 @@
+# 2.1.2
+We are now `jsx-standalone` - to continue the minimal approaches of `jsx-no-react` in the past. The previous repo has been archived and abandoned - so this is the new ongoing support.
+
 # 2.0.0
 
  Breaking changes introduced with rendering modes - `renderAndReplace` is now called `render` to follow common practice with SPA frameworks rendering mechanisms. Additionally, the render locations below are more explicit on where they will place the JSX output. Finally, prepend and append now support top-level JSX fragments (before and after render locations require a top-level container element still).
@@ -25,7 +28,7 @@ Sadly the previous release had old code in it, this release fixes it.
 
 This release needs extra care in the babel configuration to make Fragments work.
 You need to replace `babel-plugin-transform-react-jsx` with `@babel/preset-react`.
-Please check the [README](https://github.com/bitboxer/jsx-no-react/blob/main/README.md)
+Please check the [README](https://github.com/jaredsartin/jsx-standalone/blob/main/README.md)
 for details.
 
 # 0.5.0

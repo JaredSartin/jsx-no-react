@@ -1,26 +1,11 @@
-# jsx-no-react
+# jsx-standalone
 
-[![Build Status](https://github.com/jaredsartin/jsx-no-react/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/jaredsartin/jsx-no-react/actions/workflows/node.js.yml)
-
-`jsx-no-react` makes it possible to use React's JSX syntax outside of React projects. Using `renderBefore` and `renderAfter` requires a modern browser supporting `Element.insertAdjacentElement()` - all other render modes function in legacy browsers.
+`jsx-standalone` makes it possible to use React's JSX syntax outside of React projects. Using `renderBefore` and `renderAfter` requires a modern browser supporting `Element.insertAdjacentElement()` - all other render modes function in legacy browsers.
 
 ## Installation
 
 ```sh
-yarn add jsx-no-react
-```
-
-### Upgrading
-
-2.0.0 introduces breaking changes with rendering modes - `renderAndReplace` is now called `render` to follow common practice with SPA frameworks rendering mechanisms. Additionally, the render locations below are more explicit on where they will place the JSX output. Finally, prepend and append now support top-level JSX fragments (before and after render locations require a top-level container element still).
-
-New methods:
-```js
-renderBefore(<Hello name="world" />, targetElement);
-renderPrepend(<Hello name="world" />, targetElement);
-render(<Hello name="world" />, targetElement);
-renderAppend(<Hello name="world" />, targetElement);
-renderAfter(<Hello name="world" />, targetElement);
+yarn add jsx-standalone
 ```
 
 ### Usage in Babel
@@ -57,10 +42,10 @@ Details on how to inject jsxElem as builder can be found [in the esbuild documen
 
 ### Basic
 
-The `jsx-no-react` package just defines a function to replace the `React.createElement`, so as well as importing the relevant function into scope where you want to use JSX:
+The `jsx-standalone` package just defines a function to replace the `React.createElement`, so as well as importing the relevant function into scope where you want to use JSX:
 
 ```javascript
-import jsxElem, { render } from "jsx-no-react";
+import jsxElem, { render } from "jsx-standalone";
 
 function App(props) {
   return <div>Hello {props.name}</div>;
@@ -72,7 +57,7 @@ render(<App name="world" />, document.body);
 or
 
 ```javascript
-import jsxElem, { render } from "jsx-no-react";
+import jsxElem, { render } from "jsx-standalone";
 
 function App(name) {
   return <div>Hello {name}</div>;
@@ -117,7 +102,7 @@ When rendering a component JSX attributes will be passed as single object.
 For example:
 
 ```javascript
-import jsxElem, { render } from "jsx-no-react";
+import jsxElem, { render } from "jsx-standalone";
 
 function Hello(props) {
   return <h1>Hello {props.name}</h1>;
@@ -134,7 +119,7 @@ There are several ways to render an element:
 - `renderAfter`: this function renders the JSX element after after the target element - top level JSX element must not be a fragment.
 
 ```javascript
-import jsxElem, { render, renderAfterEnd, renderBeforeEnd, renderAndReplace } from "jsx-no-react";
+import jsxElem, { render, renderAfterEnd, renderBeforeEnd, renderAndReplace } from "jsx-standalone";
 
 function Hello(props) {
   return <h1>Hello {props.name}</h1>;
@@ -152,7 +137,7 @@ renderAfter(<Hello name="world" />, document.body);
 Components can be reused and combined together.
 
 ```javascript
-import jsxElem, { render } from "jsx-no-react";
+import jsxElem, { render } from "jsx-standalone";
 
 function Hello(props) {
   return <h1>Hello {props.name}</h1>;
@@ -293,7 +278,7 @@ function App() {
 Object can be passed to the `style` attribute with keys in camelCase.
 
 ```javascript
-import jsxElem, { render } from "jsx-no-react";
+import jsxElem, { render } from "jsx-standalone";
 
 function Hello(props) {
   return <h1>Hello {props.name}</h1>;
