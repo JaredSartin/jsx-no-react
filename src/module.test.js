@@ -121,6 +121,22 @@ describe("jsxElement usage", () => {
 
     expect(element.innerHTML).toEqual("<h1>Hello</h1><h1>world</h1>");
   });
+
+  it("works with props.children syntax", () => {
+    function Parental(props) {
+      return <family>
+        <momma />
+        <daddy />
+        <kids>
+          {props.children}
+        </kids>
+      </family>;
+    }
+
+    const element = <Parental><a>Kiddo</a><b>Babeh</b></Parental>;
+
+    expect(element.outerHTML).toEqual("<family><momma></momma><daddy></daddy><kids><a>Kiddo</a><b>Babeh</b></kids></family>");
+  });
 });
 
 describe("render", () => {

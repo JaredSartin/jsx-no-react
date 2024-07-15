@@ -115,6 +115,13 @@ function converter(tag, attrs, ...children) {
     return createAndAppendSVG(tag, attrs, ...children);
   }
 
+  const handledAsFunc = typeof tag === 'function' && typeof tag?.name === 'string' && tag?.name !== 'Fragment';
+  if (handledAsFunc) {
+    attrs = attrs || {};
+    attrs.children = children;
+    children = [];
+  }
+
   const elem = createElement(tag, attrs);
 
   for (const child of children) {
