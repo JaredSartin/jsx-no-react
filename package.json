@@ -1,6 +1,6 @@
 {
   "name": "jsx-standalone",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "Use JSX without React",
   "repository": "https://github.com/jaredsartin/jsx-standalone",
   "author": "Jared Sartin <jared@sart.in>",

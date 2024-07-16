@@ -283,11 +283,29 @@ var JSXNoReact = (function (exports) {
       return createAndAppendSVG.apply(void 0, [tag, attrs].concat(children));
     }
 
+    var handledAsFunc = typeof tag === 'function' && typeof (tag === null || tag === void 0 ? void 0 : tag.name) === 'string' && (tag === null || tag === void 0 ? void 0 : tag.name) !== 'Fragment';
+
+    if (handledAsFunc) {
+      attrs = attrs || {};
+      attrs.children = children;
+    }
+
     var elem = createElement(tag, attrs);
 
-    for (var _i3 = 0, _children2 = children; _i3 < _children2.length; _i3++) {
-      var child = _children2[_i3];
-      appendChild(elem, child);
+    if (!handledAsFunc) {
+      var _iterator2 = _createForOfIteratorHelper(children),
+          _step2;
+
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var child = _step2.value;
+          appendChild(elem, child);
+        }
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
     }
 
     return elem;
